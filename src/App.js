@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Creator } from "./store/layoutReducer";
+import "./App.css";
 
 function App() {
+  const theme = useSelector((state) => state.layoutReducer.theme);
+  const dispatch = useDispatch();
+
+  const changeTheme = () => {
+    theme === "theme-light"
+      ? dispatch(Creator.darkTheme())
+      : dispatch(Creator.lightTheme());
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`container ${theme}`}>
+      <h1>Theme Switcher</h1>
+      <label id="switch" className="switch">
+        <input type="checkbox" id="slider" onClick={changeTheme} />
+        <span className="slider round"></span>
+      </label>
     </div>
   );
 }
